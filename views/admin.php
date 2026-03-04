@@ -3,6 +3,20 @@
     <a href="index.php?controller=auth&action=logout" style="padding: 8px 15px; background: #dc3545; color: white; text-decoration: none; border-radius: 4px;">Odhlásit se (<?= htmlspecialchars($_SESSION['username']) ?>)</a>
 </div>
 
+<?php if (isset($_SESSION['admin_error'])): ?>
+    <div style="background: #ffcccc; color: #cc0000; padding: 15px; margin-bottom: 20px; border: 1px solid #cc0000; border-radius: 4px; font-weight: bold;">
+        ⚠️ <?= htmlspecialchars($_SESSION['admin_error']) ?>
+    </div>
+    <?php unset($_SESSION['admin_error']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['admin_success'])): ?>
+    <div style="background: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 4px;">
+        ✅ <?= htmlspecialchars($_SESSION['admin_success']) ?>
+    </div>
+    <?php unset($_SESSION['admin_success']); ?>
+<?php endif; ?>
+
 <div style="display: flex; gap: 30px;">
     <div style="flex: 2;">
         <h3>Seznam produktů</h3>
@@ -55,7 +69,7 @@
             <?php foreach ($categories as $c): ?>
                 <li style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
                     <span><?= htmlspecialchars($c->name) ?></span>
-                    <a href="index.php?controller=admin&action=deleteCategory&id=<?= $c->id ?>" onclick="return confirm('Opravdu smazat kategorii? Smažou se i všechny produkty v ní!');" style="color: #dc3545; text-decoration: none; font-size: 0.9em;">[Smazat]</a>
+                    <a href="index.php?controller=admin&action=deleteCategory&id=<?= $c->id ?>" onclick="return confirm('Opravdu smazat kategorii? Smažou se i všechny její podkategorie!');" style="color: #dc3545; text-decoration: none; font-size: 0.9em;">[Smazat]</a>
                 </li>
             <?php endforeach; ?>
         </ul>

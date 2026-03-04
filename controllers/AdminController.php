@@ -66,10 +66,20 @@ class AdminController {
 
     public function deleteCategory() {
         if (isset($_GET['id'])) {
+            $categoryId = (int)$_GET['id'];
             $categories = Category::getAll();
-            $ids = Category::getDescendantIds($categories, $_GET['id']);
-            foreach ($ids as $id){
-                Category::delete($id);
+            
+            $ids = Category::getDescendantIds($categories, $categoryId);
+            
+            $products = Product::getByCategories($ids);
+            
+            if (count($products) > 0) {
+                $_SESSION['admin_error'] = "Chyba: Kategorii nelze smazat, protože ona nebo její podkategorie stále obsahují produkty.";
+            } else {
+                foreach($ids as $id){
+                    Category::delete($id);
+                }
+                $_SESSION['admin_success'] = "Kategorie byla úspěšně smazána.";
             }
         }
         header('Location: index.php?controller=admin&action=index');
