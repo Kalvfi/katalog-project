@@ -1,5 +1,4 @@
 <?php
-
 class ProductAdminRow {
     public $id;
     public $name;
