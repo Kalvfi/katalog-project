@@ -10,15 +10,13 @@ class AdminController {
     public function index() {
         $categories = Category::getAll();
         
-        $db = Database::getConnection();
-        $stmt = $db->query("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC");
-        $allProducts = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $products = Product::getAllWithCategories();
 
         $viewContent = 'views/admin.php';
         require 'views/layout.php';
     }
 
-    // >------- Product -------<
+    // -------< Product >-------
     public function productForm() {
         $categories = Category::getAll();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -55,7 +53,7 @@ class AdminController {
         exit;
     }
 
-    // >------- Category -------<
+    // -------< Category >-------
     public function saveCategory() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Category::create($_POST['name'], $_POST['parent_id']);

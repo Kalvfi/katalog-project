@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($allProducts as $p): ?>
+                <?php foreach ($products as $p): ?>
                     <tr style="border-bottom: 1px solid #ddd;">
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong><?= htmlspecialchars($p->name) ?></strong></td>
                         <td style="padding: 10px; border: 1px solid #ddd;"><?= htmlspecialchars($p->category_name) ?></td>

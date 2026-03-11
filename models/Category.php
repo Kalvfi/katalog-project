@@ -28,7 +28,7 @@ class Category {
         return $ids;
     }
 
-    // >------- Admin -------<
+    // -------< Admin >-------
     public static function create($name, $parent_id) {
         $db = Database::getConnection();
         $parent_id = empty($parent_id) ? null : $parent_id;

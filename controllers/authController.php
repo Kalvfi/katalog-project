@@ -2,7 +2,7 @@
 class AuthController {
     public function login() {
         if (isset($_SESSION['user_id'])) {
-            header('Location: index.php?controller=auth&action=admin');
+            header('Location: index.php?controller=admin&action=index');
             exit;
         }
 

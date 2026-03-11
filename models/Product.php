@@ -23,7 +23,8 @@ class Product {
 
         $stmt = $db->prepare("SELECT * FROM products WHERE category_id IN ($placeholders) ORDER BY $orderBy");
         $stmt->execute($categoryIds);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Product');
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Product');
+        return $stmt->fetchAll();
     }
 
     public static function getById($id) {
@@ -34,7 +35,13 @@ class Product {
         return $stmt->fetch();
     }
 
-    // >------- Admin -------<
+    public static function getAllWithCategories(){
+        $db = Database::getConnection();
+        $stmt = $db->query("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC");
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Product');
+    }
+
+    // -------< Admin >-------
     public static function create($name, $description, $price, $category_id) {
         $db = Database::getConnection();
         $stmt = $db->prepare("INSERT INTO products (name, description, price, category_id) VALUES (?, ?, ?, ?)");
