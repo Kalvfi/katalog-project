@@ -38,7 +38,7 @@ class Product {
     public static function getAllWithCategories(){
         $db = Database::getConnection();
         $stmt = $db->query("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC");
-        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Product');
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'ProductAdminRow');
     }
 
     // -------< Admin >-------
